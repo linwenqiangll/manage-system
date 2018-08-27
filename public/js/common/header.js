@@ -4,6 +4,7 @@
 function Header(){
     this.createDom();
     this.createModal();
+    this.addListener();
 };
 // 头部导航模板字符串
 Header.template = `    <nav class="navbar navbar-default navbar-inverse">
@@ -26,8 +27,8 @@ Header.template = `    <nav class="navbar navbar-default navbar-inverse">
                             <li><a href="/html/position.html">职位管理</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right not-login">
-                            <li><a href="#" class="login" data-toggle="modal" data-target="#login_Modal">登录</a></li>
-                            <li><a href="#" class="register" data-toggle="modal" data-target="#register_Modal">注册</a></li>
+                            <li><a href="#" class="login link_login" data-toggle="modal" data-target="#login_Modal">登录</a></li>
+                            <li><a href="#" class="register link_register" data-toggle="modal" data-target="#register_Modal">注册</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right login-success hide">
                                 <li><a href="#">欢迎您：123</a></li>
@@ -48,6 +49,16 @@ $.extend(Header.prototype,{
     createModal(){
         new LoginModal();
         new RegisterModal();
+    },
+    // 注册事件监听
+    addListener(){
+        $(".link_login,.link_register").on("click",this.genCaptchaHandler)
+    },
+    // 生成验证码
+    genCaptchaHandler(){
+        $.get("/captcha/gencode",(data)=>{
+            $(".code-img").html(data);
+        },"text");
     }
 });
 // 创建头部对象实例

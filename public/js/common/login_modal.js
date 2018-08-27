@@ -26,7 +26,8 @@ LoginModal.template = `<div class="modal fade" id="login_Modal" tabindex="-1" ro
                                         <div class="form-group">
                                             <label for="loginCode">验证码</label>
                                             <input type="text" class="form-control" id="loginCode" placeholder="输入验证码">
-                                            <p>图片</p>
+                                            <p class="code-img"  style = "display:inline-block;">图片</p>
+                                            <span class = "code-info" style = "display:inline-block;"></span>
                                         </div>
                                     </form>
                                 </div>
@@ -45,7 +46,19 @@ $.extend(LoginModal.prototype,{
     },
     // 注册事件监听
     addListener(){
+        $('#loginCode').on('blur',this.verifyHandler);
         $('.btn-login').on("click",this.loginHandler)
+    },
+    verifyHandler(){
+        // 输入验证码
+        var code = $("#loginCode").val();
+        // ajax
+        $.getJSON("/captcha/verify",{code},(data)=>{
+            if(data.res_code === 1)
+            $(".code-info").html("正确")
+            else
+            $(".code-info").html("错误")
+        });
     },
     // 登录业务处理
     loginHandler(){

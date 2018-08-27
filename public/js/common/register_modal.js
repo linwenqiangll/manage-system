@@ -31,7 +31,8 @@ RegisterModal.template = `<div class="modal fade" id="register_Modal" tabindex="
                                             <div class="form-group">
                                                 <label for="registerCode">验证码</label>
                                                 <input type="text" class="form-control" id="registerCode" placeholder="输入验证码">
-                                                <p>图片</p>
+                                                <p class="code-img"  style = "display:inline-block;">图片</p>
+                                                <span class = "code-info" style = "display:inline-block;"></span>
                                             </div>
                                         </form>
                                     </div>
@@ -48,7 +49,20 @@ $.extend(RegisterModal.prototype,{
     },
         // 注册事件监听
         addListener(){
+            $('#registerCode').on('blur',this.verifyHandler);
             $('.btn-register').on("click",this.registerHandler)
+           
+        },
+        verifyHandler(){
+            // 输入验证码
+            var code = $("#registerCode").val();
+            // ajax
+            $.getJSON("/captcha/verify",{code},(data)=>{
+                if(data.res_code === 1)
+                $(".code-info").html("正确")
+                else
+                $(".code-info").html("错误")
+            });
         },
         // 注册业务处理
         registerHandler(){
