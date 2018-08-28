@@ -69,12 +69,8 @@ $.extend(RegisterModal.prototype,{
             // 待传递到服务器的用户登录数据
             var data = $(".register-form").serialize();
             // ajax 提交登录处理
-            $.post("/users/Register",data,(resData)=>{
+            $.post("/users/register",data,(resData)=>{
                 console.log(resData)
-            }).done(()=>{
-                $("#Register_Modal").modal("hide");
-            }).done(()=>{
-                $(".Register-success").removeClass("hide").siblings(".not-Register").remove();
-            })
+            },'json');
         }
 })

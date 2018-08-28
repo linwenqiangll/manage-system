@@ -1,19 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var UserService = require('../services/user_service');
 
-/* GET users listing. */
-// http://localhost:3000/user/
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+
 
 // 用户登录
 // http://localhost:3000/user/login
-router.post("/login",function(req,res,next){
-  res.send("用户登录处理")
-});
+router.post("/login",UserService.login);
 // 用户注册
-router.post("/register",function(req,res,next){
-  res.send("用户注册处理")
-});
+router.post("/register",UserService.register);
+
+
 module.exports = router;

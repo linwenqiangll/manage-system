@@ -52,6 +52,7 @@ $.extend(Header.prototype,{
     },
     // 注册事件监听
     addListener(){
+        // 点击登录，注册链接
         $(".link_login,.link_register").on("click",this.genCaptchaHandler)
     },
     // 生成验证码

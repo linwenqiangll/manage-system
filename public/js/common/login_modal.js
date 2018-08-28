@@ -67,11 +67,15 @@ $.extend(LoginModal.prototype,{
         // ajax 提交登录处理
         $.post("/users/login",data,(resData)=>{
             console.log(resData)
-        }).done(()=>{
-            $("#login_Modal").modal("hide");
-        }).done(()=>{
-            $(".login-success").removeClass("hide").siblings(".not-login").remove();
-        })
+            if(resData.res_code === 1){
+                $("#login_Modal").modal("hide");
+                $(".login-success").removeClass("hide").siblings(".not-login").remove();
+                // 将登录成功的用户信息保存起来，保存到sessionStorage中
+                sessionStorage.loginUser = JSON.stringify(resData.res_body);
+            }else{
+                alert('用户名或密码错误')
+            }
+        });
     }
     
 })
