@@ -9,6 +9,7 @@ var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var captchaRouter = require("./routes/captcha");
+var positionsRouter = require('./routes/positions.js');
 // 创建Express 应用实例
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);//访问根目录下资源
 app.use('/users', usersRouter);//访问users目录下资源
 app.use("/captcha",captchaRouter);//访问captcha目录下资源
+app.use("/positions",positionsRouter);//访问positions目录下资源
 
 
 

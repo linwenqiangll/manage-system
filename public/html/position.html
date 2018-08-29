@@ -20,39 +20,39 @@
           <h4 class="modal-title" id="position_information">职位信息</h4>
         </div>
         <div class="modal-body">
-            <form>
+            <form class="add-position-form">
                 <div class="form-group">
                     <label for="company_logo">公司logo</label>
-                    <input type="file" id="company_logo" class="form-control">
+                    <input type="file" id="company_logo" class="form-control" name="logo">
                 </div>
                 <div class="form-group">
                   <label for="position_name">职位名称</label>
-                  <input type="text" class="form-control" id="position_name" placeholder="输入职位名">
+                  <input type="text" class="form-control" id="position_name" name="name" placeholder="输入职位名">
                 </div>
                 <div class="form-group">
                   <label for="company_name">公司名称</label>
-                  <input type="text" class="form-control" id="company_name" placeholder="输入公司名称">
+                  <input type="text" class="form-control" id="company_name" name="company_name" placeholder="输入公司名称">
                 </div>
                 <div class="form-group">
                     <label for="work_experience">工作经验</label>
-                    <input type="text" class="form-control" id="work_experience" placeholder="输入工作经验">
+                    <input type="text" class="form-control" id="work_experience" name="experience" placeholder="输入工作经验">
                 </div>
                 <div class="form-group">
                     <label for="position_type">职位类型</label>
-                    <input type="text" class="form-control" id="position_type" placeholder="输入岗位名称">
+                    <input type="text" class="form-control" id="position_type" name="position_type" placeholder="输入岗位名称">
                 </div>
                 <div class="form-group">
                     <label for="workplace">工作地点</label>
-                    <input type="text" class="form-control" id="workplace" placeholder="输入工作地点">
+                    <input type="text" class="form-control" id="workplace" name="city" placeholder="输入工作地点">
                 </div>
                 <div class="form-group">
                     <label for="post_pay">岗位薪资</label>
-                    <input type="text" class="form-control" id="post_pay" placeholder="输入岗位薪资">
+                    <input type="text" class="form-control" id="post_pay" name="salary" placeholder="输入岗位薪资">
                 </div>
               </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">提交</button>
+          <button type="button" class="btn btn-primary btn-add-pos">提交</button>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
        </tr>
      </thead>
      <tbody>
-
+       
      </tbody>
   </table>
 <!-- 分页 -->
@@ -103,5 +103,6 @@
     <script src="/js/common/login_modal.js"></script>
     <script src="/js/common/register_modal.js"></script>
     <script src="/js/common/header.js"></script>
+    <script src="/js/position/position.js"></script>
 </body>
 </html>

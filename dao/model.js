@@ -9,6 +9,16 @@ const User = mongoose.model('user',{
     password:String,
     email:String
 });
+// 职位模型
+const Position = mongoose.model("position",{
+    name:String,
+    logo:String,
+    salary:Number,
+    city:String,
+    position_type:String,
+    company_name:String,
+    experience:String
+})
 
 
-module.exports = {User};
+module.exports = {User,Position};

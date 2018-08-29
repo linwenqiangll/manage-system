@@ -66,7 +66,6 @@ $.extend(LoginModal.prototype,{
         var data = $(".login-form").serialize();
         // ajax 提交登录处理
         $.post("/users/login",data,(resData)=>{
-            console.log(resData)
             if(resData.res_code === 1){
                 $("#login_Modal").modal("hide");
                 $(".login-success").removeClass("hide").siblings(".not-login").remove();
