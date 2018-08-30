@@ -25,6 +25,10 @@ const UserService = {
 				res.json({res_code: -1, res_error: err, res_body: {}});
 			});
 	},
+	logout(req,res,next){
+		req.session.loginUser = null;
+		res.json({res_code:0,res_error:'',res_body:{status:true}});
+	},
 	// 注册
 	register(req, res, next) {
 		// 获取在请求中传递的注册用户信息

@@ -26,8 +26,9 @@ LoginModal.template = `<div class="modal fade" id="login_Modal" tabindex="-1" ro
                                         <div class="form-group">
                                             <label for="loginCode">验证码</label>
                                             <input type="text" class="form-control" id="loginCode" placeholder="输入验证码">
-                                            <p class="code-img"  style = "display:inline-block;">图片</p>
+                                            <p class="code-img" id="login-code" style = "display:inline-block;">图片</p>
                                             <span class = "code-info" style = "display:inline-block;"></span>
+                                            <label class="recode" style="display:block;">看不清，换一张</label>
                                         </div>
                                     </form>
                                 </div>
@@ -47,7 +48,8 @@ $.extend(LoginModal.prototype,{
     // 注册事件监听
     addListener(){
         $('#loginCode').on('blur',this.verifyHandler);
-        $('.btn-login').on("click",this.loginHandler)
+        $('.btn-login').on("click",this.loginHandler);
+        $('.modal-body').on('click','#login-code, .recode',this.genCaptchaHandler);
     },
     verifyHandler(){
         // 输入验证码
@@ -60,12 +62,19 @@ $.extend(LoginModal.prototype,{
             $(".code-info").html("错误")
         });
     },
+    // 生成验证码
+    genCaptchaHandler(){
+        $.get("/captcha/gencode",(data)=>{
+            $(".code-img").html(data);
+        },"text");
+    },
     // 登录业务处理
     loginHandler(){
         // 待传递到服务器的用户登录数据
         var data = $(".login-form").serialize();
         // ajax 提交登录处理
         $.post("/users/login",data,(resData)=>{
+            console.log(resData)
             if(resData.res_code === 1){
                 $("#login_Modal").modal("hide");
                 $(".login-success").removeClass("hide").siblings(".not-login").remove();
