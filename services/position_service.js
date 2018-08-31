@@ -40,8 +40,20 @@ const PositionService = {
 				res.json({res_code:-1, res_error:err, res_body: {}});
 			});
 
-    }
+    },
+    // 删除职位
+    delete(req,res,next){
+        let {id} = req.body;
+        PositionDao
+            .delete(id)
+            .then((data)=>{
+                res.json({res_code:1,res_error:"","res_body":data})
+            })
+            .catch((err)=>{
+                res.json({res_code:1,res_error:err,res_body:{}});
+            })
 
+    }
 };
 
 module.exports = PositionService;

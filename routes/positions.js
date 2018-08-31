@@ -29,4 +29,8 @@ router.post("/add", upload.single("logo"), PositionService.add);
 // http://localhost:3000/positions/list?page=1
 router.get('/list',PositionService.listByPage);
 
+// 删除职位
+//http://localhost:3000/positions/delete
+router.post("/delete", PositionService.delete);
+
 module.exports = router;

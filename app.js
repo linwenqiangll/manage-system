@@ -31,23 +31,22 @@ app.use(session({
 }));
 
 // 判断用户是否已登录
-app.use(function(req, res, next){
-  // 获取请求的URL
-  const {url} = req;
-  // 判断
-  if (url.indexOf("/position") !== -1) {
-    // 获取在 session 中保存的登录用户信息
-    const user = req.session.loginUser;    // user underfined
-    console.log(req.session)
-    if (!user) {
-      // res.sendFile(path.join(__dirname, "./public/index.html"));
-      res.redirect("/");
-      return false;
-    }
-  }
+// app.use(function(req, res, next){
+//   // 获取请求的URL
+//   const {url} = req;
+//   // 判断
+//   if (url.indexOf("/position") !== -1) {
+//     // 获取在 session 中保存的登录用户信息
+//     const user = req.session.loginUser;   
+//     if (!user) {
+//       // res.sendFile(path.join(__dirname, "./public/index.html"));
+//       res.redirect("/");
+//       return false;
+//     }
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // 指明静态资源存放位置
 app.use(express.static(path.join(__dirname, 'public')));

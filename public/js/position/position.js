@@ -4,16 +4,16 @@ function Position(){
 }
 Position.listInfoTemplate = `
             <% for (var i = 0;i < positions.length; i++){ %>
-                <tr>
+                <tr data-id="<%= positions[i]._id %>">
                     <td><%= i+1 %></td>
-                    <td><img src="../images/upload/<%=positions[i].logo %>" style="width:80px;height:60px;"></td>
+                    <td><img src="../images/upload/<%=positions[i].logo %>" style="width:80px;height:60px;display:block;"></td>
                     <td><%=positions[i].name %></td>
                     <td><%=positions[i].company_name %></td>
                     <td><%=positions[i].experience %></td>
                     <td><%=positions[i].position_type %></td>
                     <td><%=positions[i].city %></td>
                     <td><%=positions[i].salary %></td>
-                    <td><a href="javascript:void(0);">修改</a> <a href="javascript:void(0);">删除</a></td>
+                    <td style="display:flex;Justify-content:space-around;align-items:center;"><button type="button" class="btn btn-info modify">修改</button> <button type="button" class="btn btn-danger delete">删除</button></td>
                 </tr>
                 <% } %>`;
 Position.paginationTemplate = `
@@ -25,7 +25,9 @@ $.extend(Position.prototype,{
     addListener(){
         $(".btn-add-pos").on('click',this.addPositionHandler);
         // 翻页
-		$(".pagination").on("click", "li", this.loadByPage);
+        $(".pagination").on("click", "li", this.loadByPage);
+        //删除
+        $('.list-table tbody').on('click','.delete',this.removePositionHandler);
     },
   // 页面加载
 	load() {
@@ -85,6 +87,18 @@ $.extend(Position.prototype,{
             },
             dataType:"json"
         })
+    },
+    // 删除职位信息 
+    removePositionHandler(){
+        // 获取当前数据的id
+        const _id = $(this).parents("tr").data("id");
+        const _tr = $(this).parents("tr");
+        $.post("/positions/delete",{id:_id},(data)=>{
+            if(data.res_code===1){
+                _tr.remove();
+            }
+        });
+
     }
 })
 

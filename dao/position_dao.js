@@ -26,8 +26,8 @@ const Position_dao = {
     find(){
 
     },
-    delete(){
-
+    delete(positionInfo){
+        return Position.findByIdAndDelete(positionInfo);
     }
 };
 

@@ -13,6 +13,7 @@ const UserService = {
 					const _pass = data[0].password;
 					// 比较密码是否正确
 					if (bcrypt.compareSync(password, _pass)) { // 正确
+						req.session.loginUser = username;
 						res.json({res_code:1, res_error:"", res_body: data[0]});
 					} else { // 错误
 						res.json({res_code:0, res_error:"not exist", res_body:{}});
