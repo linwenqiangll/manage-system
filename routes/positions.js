@@ -33,4 +33,11 @@ router.get('/list',PositionService.listByPage);
 //http://localhost:3000/positions/delete
 router.post("/delete", PositionService.delete);
 
+// 查找职位信息
+// http://localhost：3000/positions/find
+router.get("/find", PositionService.find);
+
+// 修改职位
+// http://localhost：3000/positions/modify
+router.post("/modify",upload.single("logo"), PositionService.modify);
 module.exports = router;

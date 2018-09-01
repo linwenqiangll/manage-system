@@ -4,6 +4,7 @@ const PositionService = {
     add(req,res,next){
         // 从请求主体中解构文本数据
         const {name,salary,city,position_type,company_name,experience} = req.body;
+        console.log(req.body)
         // 将上传文件的logo文件名保存
         let logo = "";
         if(req.file)
@@ -53,6 +54,37 @@ const PositionService = {
                 res.json({res_code:1,res_error:err,res_body:{}});
             })
 
+    },
+    // 根据id查找职位
+    find(req,res,next){
+        let {id} = req.query;
+        console.log(id)
+        PositionDao
+        .find(id)
+        .then(data=>{
+            res.json({res_code:1,res_error:"",res_body:{data}});
+        })
+        .catch(err=>{
+            res.json({res_code:-1,res_error:err,res_body:{}})
+        })
+    },
+    // 修改职位
+    modify(req,res,next){
+        let {id,name,salary,city,position_type,company_name,experience} = req.body;
+        console.log(id)
+        let logo = "";
+        if(req.file)
+        logo = req.file.filename;
+        PositionDao
+            .update({id,name,logo,salary,city,position_type,company_name,experience})
+            .then(data=>{
+                res.json({res_code:1, res_error:"", res_body: data})
+            })
+            .catch(err=>{
+                res.json({res_code:-1, res_error:err, res_body: {}})
+            });
+       
+        
     }
 };
 

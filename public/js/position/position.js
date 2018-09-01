@@ -13,7 +13,7 @@ Position.listInfoTemplate = `
                     <td><%=positions[i].position_type %></td>
                     <td><%=positions[i].city %></td>
                     <td><%=positions[i].salary %></td>
-                    <td style="display:flex;Justify-content:space-around;align-items:center;"><button type="button" class="btn btn-info modify">修改</button> <button type="button" class="btn btn-danger delete">删除</button></td>
+                    <td style="display:flex;Justify-content:space-around;align-items:center;"><button type="button" class="btn btn-info modify" data-toggle="modal" data-target="#modify_Modal">修改</button> <button type="button" class="btn btn-danger delete">删除</button></td>
                 </tr>
                 <% } %>`;
 Position.paginationTemplate = `
@@ -28,6 +28,10 @@ $.extend(Position.prototype,{
         $(".pagination").on("click", "li", this.loadByPage);
         //删除
         $('.list-table tbody').on('click','.delete',this.removePositionHandler);
+        // 查找
+        $('.list-table tbody').on('click','.modify',this.findPositionHandler);
+        // 修改
+        $('.btn-modify-pos').on('click',this.modifyPositionHandler);
     },
   // 页面加载
 	load() {
@@ -83,7 +87,7 @@ $.extend(Position.prototype,{
             processData:false,//禁止将data转换为查询字符串
             contentType:false,//不设置contentType
             success:function(data){
-                console.log(data)
+                $("#position_Modal").modal('hide');
             },
             dataType:"json"
         })
@@ -91,15 +95,66 @@ $.extend(Position.prototype,{
     // 删除职位信息 
     removePositionHandler(){
         // 获取当前数据的id
-        const _id = $(this).parents("tr").data("id");
+        const _id = $(this).parents("tr").find("id").text();
+        console.log(_id)
         const _tr = $(this).parents("tr");
         $.post("/positions/delete",{id:_id},(data)=>{
             if(data.res_code===1){
-                _tr.remove();
+                // _tr.remove();
+                location.reload();
             }
         });
 
+    },
+    // 根据id获取商品数据。渲染到需要编辑数据的模态框
+    findPositionHandler(){
+        const id = $(this).parents("tr").data("id");
+        // console.log(id)
+        $.getJSON('/Positions/find?id='+id,data=>{
+            if(data.res_code===1){
+                data = data.res_body.data;
+                console.log(data)
+                $(".modify_position_form").find(".prodId").val(data._id);
+                // $(".modify_position_form").find("#modify_company_logo").val(data.logo)
+                $(".modify_position_form").find("#modify_position_name").val(data.name);
+                $(".modify_position_form").find("#modify_company_name").val(data.company_name);
+                $(".modify_position_form").find("#modify_work_experience").val(data.experience);
+                $(".modify_position_form").find("#modify_position_type").val(data.position_type);
+                $(".modify_position_form").find("#modify_workplace").val(data.city);
+                $(".modify_position_form").find("#modify_post_pay").val(data.salary);
+            }else{
+                alert("false");
+            }
+        })
+    },
+    // 修改职位信息
+    modifyPositionHandler(){
+        const id = $(".prodId").val();
+        // 创建FormData对象：包装待上传表单的数据
+        const  formData = new FormData($('.modify-position-form').get(0));
+        console.log(formData)//用get(0)或者用jQuery【0】下标方式拿jQuery对象中的dom对象
+        // 使用$.ajax()方法
+        $.ajax({
+            type:'post',
+            url:"/positions/modify",
+            data:formData,
+            processData:false,//禁止将data转换为查询字符串
+            contentType:false,//不设置contentType
+            success:function(data){
+                if(data.res_code===1){
+                    $("#modify_Modal").modal('hide');
+                    // location.reload();
+                    console.log(1)
+                }else{
+                    alert("修改失败")
+                }
+                
+            },
+            
+            dataType:"json"
+        })
     }
+
 })
 
 new Position();

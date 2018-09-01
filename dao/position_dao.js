@@ -20,11 +20,11 @@ const Position_dao = {
         // const positions = query.skip((page-1)*pageSize).limit(pageSize);
         // return {count,totalPages,positions};//返回总记录条数与当前页职位数据
     },
-    update(){
-
+    update(positionInfo){
+        return Position.findByIdAndUpdate(positionInfo.id,{$set:positionInfo},{new: true});//new默认返回原始的数据，需要将new属性设置为true，返回更新后的数据
     },
-    find(){
-
+    find(id){
+        return Position.findById(id);
     },
     delete(positionInfo){
         return Position.findByIdAndDelete(positionInfo);
