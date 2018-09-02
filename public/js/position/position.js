@@ -113,7 +113,6 @@ $.extend(Position.prototype,{
         $.getJSON('/Positions/find?id='+id,data=>{
             if(data.res_code===1){
                 data = data.res_body.data;
-                console.log(data)
                 $(".modify_position_form").find(".prodId").val(data._id);
                 // $(".modify_position_form").find("#modify_company_logo").val(data.logo)
                 $(".modify_position_form").find("#modify_position_name").val(data.name);
